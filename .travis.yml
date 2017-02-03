@@ -3,7 +3,8 @@ dist: trusty
 language: cpp
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev
+  - sudo apt-get install -y libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev awscli
 script:
  - ./build.sh
  - zip -r mupen64plus-GLideN64.zip mupen64plus
+ - AWS_ACCESS_KEY_ID=$ACCESS_KEY AWS_SECRET_ACCESS_KEY=$SECRET_KEY aws s3 cp mupen64plus-GLideN64.zip s3://loganbuildbot/ --acl public-read
