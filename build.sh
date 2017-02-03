@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-install_dir=$PWD/out
+install_dir=$PWD/mupen64plus
 mkdir $install_dir
 base_dir=$PWD
 cd mupen64plus-core/projects/unix

@@ -16,4 +16,4 @@ make clean
 cd $base_dir/GLideN64/projects/cmake
 make clean
 cd $base_dir
-rm -rf $base_dir/out
+rm -rf $base_dir/mupen64plus
