@@ -3,6 +3,6 @@ dist: trusty
 language: cpp
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev
+  - sudo apt-get install -y libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev
 script:
  - ./build.sh
