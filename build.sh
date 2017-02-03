@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 install_dir=$PWD/out
 mkdir $install_dir

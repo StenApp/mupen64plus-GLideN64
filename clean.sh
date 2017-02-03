@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 base_dir=$PWD
 cd mupen64plus-core/projects/unix
