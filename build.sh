@@ -26,7 +26,7 @@ cp $base_dir/mupen64plus-ui-console/projects/unix/mupen64plus $install_dir
 cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
-cmake -DMUPENPLUSAPI=On ../../src/
+cmake -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
 make -j4
 cp plugin/release/mupen64plus-video-GLideN64.so $install_dir
 cp $base_dir/GLideN64/ini/GLideN64.custom.ini $install_dir
