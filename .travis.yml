@@ -1,10 +1,15 @@
+language: generic
 sudo: required
-dist: trusty
-language: cpp
+services:
+  - docker
+
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev awscli
+  - docker pull ubuntu:xenial
+  - docker run --name ubuntu -it -d ubuntu:xenial /bin/bash
+
 script:
- - ./build.sh
- - zip -r mupen64plus-GLideN64.zip mupen64plus
- - AWS_DEFAULT_REGION="us-east-1" AWS_ACCESS_KEY_ID=$ACCESS_KEY AWS_SECRET_ACCESS_KEY=$SECRET_KEY aws s3 cp mupen64plus-GLideN64.zip s3://loganbuildbot/ --acl public-read
+  - docker exec ubuntu apt-get -qq update
+  - docker exec ubuntu apt-get -y dist-upgrade
+  - docker exec ubuntu apt-get -y install libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev awscli qt5-default build-essential cmake nasm git zip
+  - docker exec ubuntu git clone --recursive https://github.com/m64p/mupen64plus-GLideN64.git
+  - docker exec ubuntu /bin/bash -c "export AWS_ACCESS_KEY_ID=$ACCESS_KEY; export AWS_SECRET_ACCESS_KEY=$SECRET_KEY; cd mupen64plus-GLideN64; ./build.sh aws"
