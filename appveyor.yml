@@ -4,9 +4,9 @@ environment:
   MSYS2_DIR: msys64
   MSYSTEM: MINGW64
   ACCESS_KEY:
-    secure: 3texJQ9qOmxfs/YUAYKttYberiUlkyodicdX+NRKOl4=
+    secure: 4U3SfYBNNlc0VXB/9kPvqFH0qbzOD3FXHIY7SuRFvcQ=
   SECRET_KEY:
-    secure: ZFGXS5xgtCJ4hzkYuH8c8h1FIg1eYWMW2SzwYmjZrzw4aQQNFlZP+je6inXK2Mov
+    secure: PtL0a/tSy8HJbUiwu8GNvx+UfOeOiSTrqGxmGswskxs8EBVLIJX5k2LgnX85V45G
 build_script:
 - cmd: >-
     cd %APPVEYOR_BUILD_FOLDER%
