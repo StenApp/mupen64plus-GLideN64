@@ -103,6 +103,8 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /mingw64/bin/libminizip-1.dll $install_dir
   cp /mingw64/bin/libsamplerate-0.dll $install_dir
   cp /mingw64/bin/libspeexdsp-1.dll $install_dir
+  cp /mingw64/bin/libjasper-4.dll $install_dir
+  cp /mingw64/bin/libjpeg-8.dll $install_dir
 else
   my_os=linux
 fi
