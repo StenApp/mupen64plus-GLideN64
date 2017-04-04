@@ -68,9 +68,9 @@ cd $base_dir/GLideN64/projects/cmake
 if [[ $1 == "rpi3" ]]; then
   cmake -DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
 elif [[ $UNAME == *"MINGW"* ]]; then
-  cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 else
-  cmake -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 fi
 make -j4
 
