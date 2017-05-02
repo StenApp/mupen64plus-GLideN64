@@ -52,7 +52,11 @@ if [[ $1 != "rpi3" ]]; then
   mkdir -p $base_dir/mupen64plus-gui/build
   cd $base_dir/mupen64plus-gui/build
   if [[ $UNAME == *"MINGW"* ]]; then
-    /mingw64/qt5-static/bin/qmake ../mupen64plus-gui.pro
+    if [[ $UNAME == *"MINGW64"* ]]; then
+      /mingw64/qt5-static/bin/qmake ../mupen64plus-gui.pro
+    else
+      /mingw32/qt5-static/bin/qmake ../mupen64plus-gui.pro
+    fi
     make -j4 release
     cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
   else
@@ -84,27 +88,34 @@ cd $base_dir
 
 my_date=$(date +'%Y%m')
 if [[ $UNAME == *"MINGW"* ]]; then
-  my_os=win64
-  cp /mingw64/bin/libgcc_s_seh-1.dll $install_dir
-  cp /mingw64/bin/libwinpthread-1.dll $install_dir
-  cp /mingw64/bin/SDL2.dll $install_dir
-  cp /mingw64/bin/libpcre16-0.dll $install_dir
-  cp /mingw64/bin/libpng16-16.dll $install_dir
-  cp /mingw64/bin/libglib-2.0-0.dll $install_dir
-  cp /mingw64/bin/libstdc++-6.dll $install_dir
-  cp /mingw64/bin/zlib1.dll $install_dir
-  cp /mingw64/bin/libintl-8.dll $install_dir
-  cp /mingw64/bin/libpcre-1.dll $install_dir
-  cp /mingw64/bin/libiconv-2.dll $install_dir
-  cp /mingw64/bin/libharfbuzz-0.dll $install_dir
-  cp /mingw64/bin/libgraphite2.dll $install_dir
-  cp /mingw64/bin/libfreetype-6.dll $install_dir
-  cp /mingw64/bin/libbz2-1.dll $install_dir
-  cp /mingw64/bin/libminizip-1.dll $install_dir
-  cp /mingw64/bin/libsamplerate-0.dll $install_dir
-  cp /mingw64/bin/libspeexdsp-1.dll $install_dir
-  cp /mingw64/bin/libjasper-4.dll $install_dir
-  cp /mingw64/bin/libjpeg-8.dll $install_dir
+  if [[ $UNAME == *"MINGW64"* ]]; then
+    my_os=win64
+    my_path=mingw64
+    cp /$my_path/bin/libgcc_s_seh-1.dll $install_dir
+  else
+    my_os=win32
+    my_path=mingw32
+    cp /$my_path/bin/libgcc_s_dw2-1.dll $install_dir
+  fi
+  cp /$my_path/bin/libwinpthread-1.dll $install_dir
+  cp /$my_path/bin/SDL2.dll $install_dir
+  cp /$my_path/bin/libpcre16-0.dll $install_dir
+  cp /$my_path/bin/libpng16-16.dll $install_dir
+  cp /$my_path/bin/libglib-2.0-0.dll $install_dir
+  cp /$my_path/bin/libstdc++-6.dll $install_dir
+  cp /$my_path/bin/zlib1.dll $install_dir
+  cp /$my_path/bin/libintl-8.dll $install_dir
+  cp /$my_path/bin/libpcre-1.dll $install_dir
+  cp /$my_path/bin/libiconv-2.dll $install_dir
+  cp /$my_path/bin/libharfbuzz-0.dll $install_dir
+  cp /$my_path/bin/libgraphite2.dll $install_dir
+  cp /$my_path/bin/libfreetype-6.dll $install_dir
+  cp /$my_path/bin/libbz2-1.dll $install_dir
+  cp /$my_path/bin/libminizip-1.dll $install_dir
+  cp /$my_path/bin/libsamplerate-0.dll $install_dir
+  cp /$my_path/bin/libspeexdsp-1.dll $install_dir
+  cp /$my_path/bin/libjasper-4.dll $install_dir
+  cp /$my_path/bin/libjpeg-8.dll $install_dir
 else
   my_os=linux
 fi
