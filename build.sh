@@ -12,6 +12,8 @@ fi
 UNAME=$(uname -s)
 if [[ $UNAME == *"MINGW"* ]]; then
   suffix=".dll"
+elif [[ $UNAME == "Darwin" ]]; then
+  suffix=".dylib"
 else
   suffix=".so"
 fi
@@ -79,9 +81,9 @@ fi
 make -j4
 
 if [[ $UNAME == *"MINGW"* ]]; then
-  cp mupen64plus-video-GLideN64.dll $install_dir
+  cp mupen64plus-video-GLideN64$suffix $install_dir
 else
-  cp plugin/release/mupen64plus-video-GLideN64.so $install_dir
+  cp plugin/release/mupen64plus-video-GLideN64$suffix $install_dir
 fi
 cp $base_dir/GLideN64/ini/GLideN64.custom.ini $install_dir
 cd $base_dir
@@ -116,6 +118,8 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /$my_path/bin/libspeexdsp-1.dll $install_dir
   cp /$my_path/bin/libjasper-4.dll $install_dir
   cp /$my_path/bin/libjpeg-8.dll $install_dir
+elif [[ $UNAME == "Darwin" ]]; then
+  my_os=macos
 else
   my_os=linux
 fi
