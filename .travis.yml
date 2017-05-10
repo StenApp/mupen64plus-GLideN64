@@ -3,13 +3,22 @@ sudo: required
 services:
   - docker
 
+env:
+  - ARCH=i686
+  - ARCH=x86_64
+
 before_install:
-  - docker pull ubuntu:xenial
-  - docker run --name ubuntu -it -d ubuntu:xenial /bin/bash
+  - 'if [ ${ARCH} = "x86_64" ]; then
+       docker pull ubuntu:xenial;
+       docker run --name ubuntu -it -d ubuntu:xenial /bin/bash;
+     else
+       docker pull ioft/i386-ubuntu:xenial;
+       docker run --name ubuntu -it -d ioft/i386-ubuntu:xenial /bin/bash;
+     fi'
 
 script:
   - docker exec ubuntu apt-get -qq update
   - docker exec ubuntu apt-get -y dist-upgrade
   - docker exec ubuntu apt-get -y install libsdl2-dev libfreetype6-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev pkg-config zlib1g-dev binutils-dev libspeexdsp-dev libsamplerate0-dev awscli qt5-default build-essential cmake nasm git zip
   - docker exec ubuntu git clone --recursive https://github.com/m64p/mupen64plus-GLideN64.git
-  - docker exec ubuntu /bin/bash -c "export AWS_ACCESS_KEY_ID=$ACCESS_KEY; export AWS_SECRET_ACCESS_KEY=$SECRET_KEY; cd mupen64plus-GLideN64; if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then ./build.sh aws; fi"
+  - docker exec ubuntu /bin/bash -c "export HOST_CPU=$ARCH; export AWS_ACCESS_KEY_ID=$ACCESS_KEY; export AWS_SECRET_ACCESS_KEY=$SECRET_KEY; cd mupen64plus-GLideN64; if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then ./build.sh aws; fi"

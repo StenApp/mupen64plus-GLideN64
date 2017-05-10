@@ -18,6 +18,10 @@ else
   suffix=".so"
 fi
 
+if [[ $HOST_CPU == "i686" ]]; then
+  export NEW_DYNAREC=1
+fi
+
 install_dir=$PWD/mupen64plus
 mkdir $install_dir
 base_dir=$PWD
@@ -121,11 +125,15 @@ if [[ $UNAME == *"MINGW"* ]]; then
 elif [[ $UNAME == "Darwin" ]]; then
   my_os=macos
 else
-  my_os=linux
+  if [[ $HOST_CPU == "i686" ]]; then
+    my_os=linux32
+  else
+    my_os=linux64
+  fi
 fi
 
 if [[ $1 == "aws" ]]; then
   rm $base_dir/*.zip
   zip -r mupen64plus-GLideN64-$my_os-$my_date.zip mupen64plus
-  aws s3 cp mupen64plus-GLideN64-*.zip s3://m64p/m64p/ --acl public-read
+  aws s3 cp mupen64plus-GLideN64-*.zip s3://m64p/m64p/$my_date/ --acl public-read
 fi
