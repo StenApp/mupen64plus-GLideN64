@@ -9,8 +9,8 @@ if [[ $1 == "rpi3" ]]; then
   export VFP_HARD=1
 fi
 
-export CC=clang
-export CXX=clang++
+#export CC=clang
+#export CXX=clang++
 
 UNAME=$(uname -s)
 if [[ $UNAME == *"MINGW"* ]]; then
