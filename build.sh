@@ -34,14 +34,14 @@ make -j4 all
 cp -P $base_dir/mupen64plus-core/projects/unix/*$suffix* $install_dir
 cp $base_dir/mupen64plus-core/data/* $install_dir
 
-cd $base_dir/mupen64plus-rsp-hle/projects/unix
-make -j4 all
-cp $base_dir/mupen64plus-rsp-hle/projects/unix/*$suffix $install_dir
-
 if [[ $1 != "rpi3" ]]; then
   cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
-  make -j4 all
+  make HLEVIDEO=1 -j4 all
   cp $base_dir/mupen64plus-rsp-cxd4/projects/unix/*$suffix $install_dir
+else
+  cd $base_dir/mupen64plus-rsp-hle/projects/unix
+  make -j4 all
+  cp $base_dir/mupen64plus-rsp-hle/projects/unix/*$suffix $install_dir
 fi
 
 cd $base_dir/mupen64plus-input-sdl/projects/unix
