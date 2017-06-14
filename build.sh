@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
 if [[ $1 == "rpi3" ]]; then
-  export CFLAGS="-O2 -march=armv8-a+crc -mtune=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard -ftree-vectorize -funsafe-math-optimizations"
+  export CFLAGS="-O3 -march=armv8-a+crc -mtune=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard"
   export CXXFLAGS=$CFLAGS
-  export VC=1
   export USE_GLES=1
   export NEON=1
   export VFP_HARD=1
 fi
-
-#export CC=clang
-#export CXX=clang++
 
 UNAME=$(uname -s)
 if [[ $UNAME == *"MINGW"* ]]; then
@@ -79,7 +75,7 @@ cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
 if [[ $1 == "rpi3" ]]; then
-  cmake -DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -DNOHQ=On -DUSE_SYSTEM_LIBS=On -DCRC_OPT=On -DNEON_OPT=On -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
 elif [[ $UNAME == *"MINGW"* ]]; then
   cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 else
