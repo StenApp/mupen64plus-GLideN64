@@ -14,6 +14,11 @@ if [[ $UNAME == *"MINGW"* ]]; then
 elif [[ $UNAME == "Darwin" ]]; then
   suffix=".dylib"
 else
+  if [[ $HOST_CPU != "i686" ]]; then
+    if [[ $1 != "rpi3" ]]; then
+      export PIE=1
+    fi
+  fi
   suffix=".so"
 fi
 
