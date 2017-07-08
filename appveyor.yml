@@ -11,8 +11,8 @@ environment:
     - MSYSTEM: MINGW64
       myarch: x86_64
 
-    - MSYSTEM: MINGW32
-      myarch: i686
+#    - MSYSTEM: MINGW32
+#      myarch: i686
 
 build_script:
 - cmd: >-
