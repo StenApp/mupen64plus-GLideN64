@@ -22,9 +22,9 @@ else
   suffix=".so"
 fi
 
-if [[ $HOST_CPU == "i686" ]]; then
-  export NEW_DYNAREC=1
-fi
+#if [[ $HOST_CPU == "i686" ]]; then
+#  export NEW_DYNAREC=1
+#fi
 
 install_dir=$PWD/mupen64plus
 mkdir $install_dir
