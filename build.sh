@@ -50,9 +50,9 @@ make -j4 all
 cp $base_dir/mupen64plus-input-sdl/projects/unix/*$suffix $install_dir
 cp $base_dir/mupen64plus-input-sdl/data/* $install_dir
 
-cd $base_dir/mupen64plus-audio-sdl2/projects/unix
+cd $base_dir/mupen64plus-audio-sdl/projects/unix
 make -j4 all
-cp $base_dir/mupen64plus-audio-sdl2/projects/unix/*$suffix $install_dir
+cp $base_dir/mupen64plus-audio-sdl/projects/unix/*$suffix $install_dir
 
 cd $base_dir/mupen64plus-ui-console/projects/unix
 make -j4 all
@@ -122,6 +122,8 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /$my_path/bin/libfreetype-6.dll $install_dir
   cp /$my_path/bin/libbz2-1.dll $install_dir
   cp /$my_path/bin/libminizip-1.dll $install_dir
+  cp /$my_path/bin/libsamplerate-0.dll $install_dir
+  cp /$my_path/bin/libspeexdsp-1.dll $install_dir
   cp /$my_path/bin/libjasper-4.dll $install_dir
   cp /$my_path/bin/libjpeg-8.dll $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
