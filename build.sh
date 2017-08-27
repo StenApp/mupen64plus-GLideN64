@@ -69,6 +69,10 @@ if [[ $1 != "rpi3" ]]; then
     fi
     make -j4 release
     cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
+  elif [[ $UNAME == "Darwin" ]]; then
+    /usr/local/Cellar/qt5/*/bin/qmake ../mupen64plus-gui.pro
+    make -j4
+    cp -Rp $base_dir/mupen64plus-gui/build/mupen64plus-gui.app $install_dir
   else
     qmake ../mupen64plus-gui.pro
     make -j4
@@ -128,6 +132,22 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /$my_path/bin/libjpeg-8.dll $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
   my_os=macos
+
+  find mupen64plus -type f -depth 1 \
+    -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/MacOS/ \;
+
+  cd $install_dir
+  /usr/local/Cellar/qt5/*/bin/macdeployqt mupen64plus-gui.app
+
+  for P in $(find mupen64plus-gui.app -type f -name 'Qt*'; find mupen64plus-gui.app -type f -name '*.dylib'); do
+    for P1 in $(otool -L $P | awk '/\/usr\/local\/Cellar/ {print $1}'); do
+      PATHNAME=$(echo $P1 | awk '{sub(/(\/Qt.+\.framework|[^\/]*\.dylib).*/, ""); print}')
+      PSLASH1=$(echo $P1 | sed "s,$PATHNAME,@executable_path/../Frameworks,g")
+      install_name_tool -change $P1 $PSLASH1 $P
+    done
+  done
+
+  cd $base_dir
 else
   if [[ $HOST_CPU == "i686" ]]; then
     my_os=linux32
