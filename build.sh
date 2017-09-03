@@ -100,7 +100,6 @@ fi
 cp $base_dir/GLideN64/ini/GLideN64.custom.ini $install_dir
 cd $base_dir
 
-my_date=$(date +'%Y%m')
 if [[ $UNAME == *"MINGW"* ]]; then
   if [[ $UNAME == *"MINGW64"* ]]; then
     my_os=win64
@@ -158,6 +157,6 @@ fi
 
 if [[ $1 == "aws" ]]; then
   rm $base_dir/*.zip
-  zip -r mupen64plus-GLideN64-$my_os-$my_date.zip mupen64plus
-  aws s3 cp mupen64plus-GLideN64-*.zip s3://m64p/m64p/$my_date/ --acl public-read
+  zip -r mupen64plus-GLideN64-$my_os.zip mupen64plus
+  aws s3 cp mupen64plus-GLideN64-*.zip s3://m64p/m64p/ --acl public-read
 fi
