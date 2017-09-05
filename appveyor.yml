@@ -9,7 +9,7 @@ environment:
   matrix:
     - myarch: x64
 
-    - myarch: x86
+    - myarch: Win32
 
 build_script:
 - cmd: >-
