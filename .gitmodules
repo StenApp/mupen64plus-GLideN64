@@ -22,3 +22,6 @@
 [submodule "mupen64plus-audio-sdl"]
 	path = mupen64plus-audio-sdl
 	url = https://github.com/mupen64plus/mupen64plus-audio-sdl.git
+[submodule "mupen64plus-win32-deps"]
+	path = mupen64plus-win32-deps
+	url = https://github.com/mupen64plus/mupen64plus-win32-deps.git

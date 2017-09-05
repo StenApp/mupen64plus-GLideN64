@@ -1,18 +1,15 @@
 version: 1.0.{build}
 clone_folder: c:\mg
 environment:
-  MSYS2_DIR: msys64
   ACCESS_KEY:
     secure: 4U3SfYBNNlc0VXB/9kPvqFH0qbzOD3FXHIY7SuRFvcQ=
   SECRET_KEY:
     secure: PtL0a/tSy8HJbUiwu8GNvx+UfOeOiSTrqGxmGswskxs8EBVLIJX5k2LgnX85V45G
 
   matrix:
-    - MSYSTEM: MINGW64
-      myarch: x86_64
+    - myarch: x64
 
-    - MSYSTEM: MINGW32
-      myarch: i686
+    - myarch: x86
 
 build_script:
 - cmd: >-
