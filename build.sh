@@ -132,7 +132,6 @@ if [[ $UNAME == *"MINGW"* ]]; then
   fi
   cp /$my_path/bin/libwinpthread-1.dll $install_dir
   cp /$my_path/bin/SDL2.dll $install_dir
-  cp /$my_path/bin/libpcre16-0.dll $install_dir
   cp /$my_path/bin/libpng16-16.dll $install_dir
   cp /$my_path/bin/libglib-2.0-0.dll $install_dir
   cp /$my_path/bin/libstdc++-6.dll $install_dir
