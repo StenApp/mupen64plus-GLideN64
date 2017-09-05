@@ -148,6 +148,7 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /$my_path/bin/libspeexdsp-1.dll $install_dir
   cp /$my_path/bin/libjasper-4.dll $install_dir
   cp /$my_path/bin/libjpeg-8.dll $install_dir
+  cp $base_dir/7za.exe $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
   my_os=macos
 
