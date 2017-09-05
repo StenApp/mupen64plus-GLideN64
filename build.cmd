@@ -10,4 +10,4 @@ msbuild mupen64plus-ui-console/projects/VisualStudio2013/mupen64plus-ui-console.
 
 REM do gui here
 
-msbuild GLideN64/projects/msvc12/GLideN64.sln /p:Configuration=Release_mupenplus /p:Platform=%myarch%
+msbuild GLideN64/projects/msvc12/GLideN64.sln /p:Configuration=Release_mupenplus

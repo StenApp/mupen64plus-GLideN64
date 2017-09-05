@@ -7,7 +7,7 @@ environment:
     secure: PtL0a/tSy8HJbUiwu8GNvx+UfOeOiSTrqGxmGswskxs8EBVLIJX5k2LgnX85V45G
 
   matrix:
-    - myarch: x64
+#    - myarch: x64
 
     - myarch: Win32
 
