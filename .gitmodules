@@ -22,3 +22,6 @@
 [submodule "mupen64plus-audio-sdl"]
 	path = mupen64plus-audio-sdl
 	url = https://github.com/mupen64plus/mupen64plus-audio-sdl.git
+[submodule "angrylion-rdp-plus"]
+	path = angrylion-rdp-plus
+	url = https://github.com/loganmc10/angrylion-rdp-plus.git

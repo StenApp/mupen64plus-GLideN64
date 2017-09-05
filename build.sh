@@ -98,6 +98,22 @@ else
   cp plugin/release/mupen64plus-video-GLideN64$suffix $install_dir
 fi
 cp $base_dir/GLideN64/ini/GLideN64.custom.ini $install_dir
+
+if [[ $UNAME == *"MINGW"* ]]; then
+  cd $base_dir/angrylion-rdp-plus
+  if [[ $UNAME == *"MINGW64"* ]]; then
+    MSBuild.exe angrylion-plus.sln /t:core /p:Configuration=Release /p:Platform=x64
+    MSBuild.exe angrylion-plus.sln /t:plugin-mupen64plus /p:Configuration=Release /p:Platform=x64
+  else
+    MSBuild.exe angrylion-plus.sln /t:core /p:Configuration=Release /p:Platform=Win32
+    MSBuild.exe angrylion-plus.sln /t:plugin-mupen64plus /p:Configuration=Release /p:Platform=Win32
+  fi
+else
+  cd $base_dir/angrylion-rdp-plus/plugin-mupen64plus/projects/unix
+  make -j4 all
+  cp $base_dir/angrylion-rdp-plus/plugin-mupen64plus/projects/unix/*$suffix $install_dir
+fi
+
 cd $base_dir
 
 if [[ $UNAME == *"MINGW"* ]]; then
