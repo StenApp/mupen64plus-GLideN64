@@ -111,9 +111,11 @@ if [[ $UNAME == *"MINGW"* ]]; then
   fi
   cp $base_dir/angrylion-rdp-plus/build/Release/mupen64plus-video-angrylionplus.dll $install_dir
 else
-  cd $base_dir/angrylion-rdp-plus/plugin-mupen64plus/projects/unix
-  make -j4 all
-  cp $base_dir/angrylion-rdp-plus/plugin-mupen64plus/projects/unix/*$suffix $install_dir
+  mkdir -p $base_dir/angrylion-rdp-plus/build
+  cd $base_dir/angrylion-rdp-plus/build
+  cmake ../
+  make -j4
+  cp mupen64plus-video-angrylionplus$suffix $install_dir
 fi
 
 cd $base_dir

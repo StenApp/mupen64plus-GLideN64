@@ -32,6 +32,8 @@ rm -rf $base_dir/mupen64plus-gui/build
 cd $base_dir/GLideN64/projects/cmake
 make clean
 
+rm -rf $base_dir/angrylion-rdp-plus/build
+
 cd $base_dir
 rm -rf $base_dir/mupen64plus
 rm $base_dir/*.zip
