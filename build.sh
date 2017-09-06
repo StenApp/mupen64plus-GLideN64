@@ -1,24 +1,11 @@
 #!/usr/bin/env bash
 
-if [[ $1 == "rpi3" ]]; then
-  export CFLAGS="-O3 -march=armv8-a+crc -mtune=cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard"
-  export CXXFLAGS=$CFLAGS
-  export USE_GLES=1
-  export NEON=1
-  export VFP_HARD=1
-fi
-
 UNAME=$(uname -s)
 if [[ $UNAME == *"MINGW"* ]]; then
   suffix=".dll"
 elif [[ $UNAME == "Darwin" ]]; then
   suffix=".dylib"
 else
-  if [[ $HOST_CPU != "i686" ]]; then
-    if [[ $1 != "rpi3" ]]; then
-      export PIE=1
-    fi
-  fi
   suffix=".so"
 fi
 
@@ -35,15 +22,9 @@ make -j4 all
 cp -P $base_dir/mupen64plus-core/projects/unix/*$suffix* $install_dir
 cp $base_dir/mupen64plus-core/data/* $install_dir
 
-if [[ $1 != "rpi3" ]]; then
-  cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
-  make HLEVIDEO=1 -j4 all
-  cp $base_dir/mupen64plus-rsp-cxd4/projects/unix/*$suffix $install_dir
-else
-  cd $base_dir/mupen64plus-rsp-hle/projects/unix
-  make -j4 all
-  cp $base_dir/mupen64plus-rsp-hle/projects/unix/*$suffix $install_dir
-fi
+cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
+make HLEVIDEO=1 -j4 all
+cp $base_dir/mupen64plus-rsp-cxd4/projects/unix/*$suffix $install_dir
 
 cd $base_dir/mupen64plus-input-sdl/projects/unix
 make -j4 all
@@ -54,38 +35,30 @@ cd $base_dir/mupen64plus-audio-sdl/projects/unix
 make -j4 all
 cp $base_dir/mupen64plus-audio-sdl/projects/unix/*$suffix $install_dir
 
-cd $base_dir/mupen64plus-ui-console/projects/unix
-make -j4 all
-cp $base_dir/mupen64plus-ui-console/projects/unix/mupen64plus* $install_dir
-
-if [[ $1 != "rpi3" ]]; then
-  mkdir -p $base_dir/mupen64plus-gui/build
-  cd $base_dir/mupen64plus-gui/build
-  if [[ $UNAME == *"MINGW"* ]]; then
-    if [[ $UNAME == *"MINGW64"* ]]; then
-      /mingw64/qt5-static/bin/qmake ../mupen64plus-gui.pro
-    else
-      /mingw32/qt5-static/bin/qmake ../mupen64plus-gui.pro
-    fi
-    make -j4 release
-    cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
-  elif [[ $UNAME == "Darwin" ]]; then
-    /usr/local/Cellar/qt5/*/bin/qmake ../mupen64plus-gui.pro
-    make -j4
-    cp -Rp $base_dir/mupen64plus-gui/build/mupen64plus-gui.app $install_dir
+mkdir -p $base_dir/mupen64plus-gui/build
+cd $base_dir/mupen64plus-gui/build
+if [[ $UNAME == *"MINGW"* ]]; then
+  if [[ $UNAME == *"MINGW64"* ]]; then
+    /mingw64/qt5-static/bin/qmake ../mupen64plus-gui.pro
   else
-    qmake ../mupen64plus-gui.pro
-    make -j4
-    cp $base_dir/mupen64plus-gui/build/mupen64plus-gui $install_dir
+    /mingw32/qt5-static/bin/qmake ../mupen64plus-gui.pro
   fi
+  make -j4 release
+  cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
+elif [[ $UNAME == "Darwin" ]]; then
+  /usr/local/Cellar/qt5/*/bin/qmake ../mupen64plus-gui.pro
+  make -j4
+  cp -Rp $base_dir/mupen64plus-gui/build/mupen64plus-gui.app $install_dir
+else
+  qmake ../mupen64plus-gui.pro
+  make -j4
+  cp $base_dir/mupen64plus-gui/build/mupen64plus-gui $install_dir
 fi
 
 cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
-if [[ $1 == "rpi3" ]]; then
-  cmake -DNOHQ=On -DUSE_SYSTEM_LIBS=On -DCRC_OPT=On -DNEON_OPT=On -DVEC4_OPT=On -DMUPENPLUSAPI=On ../../src/
-elif [[ $UNAME == *"MINGW"* ]]; then
+if [[ $UNAME == *"MINGW"* ]]; then
   cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 else
   cmake -DUSE_SYSTEM_LIBS=On -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
