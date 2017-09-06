@@ -3,6 +3,11 @@
 UNAME=$(uname -s)
 if [[ $UNAME == *"MINGW"* ]]; then
   suffix=".dll"
+  if [[ $UNAME == *"MINGW64"* ]]; then
+    mingw_prefix="mingw64"
+  else
+    mingw_prefix="mingw32"
+  fi
 elif [[ $UNAME == "Darwin" ]]; then
   suffix=".dylib"
 else
@@ -38,11 +43,7 @@ cp $base_dir/mupen64plus-audio-sdl/projects/unix/*$suffix $install_dir
 mkdir -p $base_dir/mupen64plus-gui/build
 cd $base_dir/mupen64plus-gui/build
 if [[ $UNAME == *"MINGW"* ]]; then
-  if [[ $UNAME == *"MINGW64"* ]]; then
-    /mingw64/qt5-static/bin/qmake ../mupen64plus-gui.pro
-  else
-    /mingw32/qt5-static/bin/qmake ../mupen64plus-gui.pro
-  fi
+  /$mingw_prefix/qt5-static/bin/qmake ../mupen64plus-gui.pro
   make -j4 release
   cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
@@ -59,9 +60,9 @@ cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
 if [[ $UNAME == *"MINGW"* ]]; then
-  cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -G "MSYS Makefiles" -DCRC_OPT=On -DMUPENPLUSAPI=On -DCMAKE_AR=/$mingw_prefix/bin/gcc-ar ../../src/
 else
-  cmake -DUSE_SYSTEM_LIBS=On -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -DUSE_SYSTEM_LIBS=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 fi
 make -j4
 
