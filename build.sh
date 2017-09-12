@@ -23,7 +23,7 @@ mkdir $install_dir
 base_dir=$PWD
 
 cd $base_dir/mupen64plus-core/projects/unix
-make -j4 all
+make OSD=0 -j4 all
 cp -P $base_dir/mupen64plus-core/projects/unix/*$suffix* $install_dir
 cp $base_dir/mupen64plus-core/data/* $install_dir
 
