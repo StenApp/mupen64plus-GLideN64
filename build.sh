@@ -27,6 +27,10 @@ make -j4 all
 cp -P $base_dir/mupen64plus-core/projects/unix/*$suffix* $install_dir
 cp $base_dir/mupen64plus-core/data/* $install_dir
 
+cd $base_dir/mupen64plus-rsp-hle/projects/unix
+make -j4 all
+cp $base_dir/mupen64plus-rsp-hle/projects/unix/*$suffix $install_dir
+
 cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
 make HLEVIDEO=1 -j4 all
 cp $base_dir/mupen64plus-rsp-cxd4/projects/unix/*$suffix $install_dir

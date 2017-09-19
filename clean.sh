@@ -5,6 +5,9 @@ base_dir=$PWD
 cd $base_dir/mupen64plus-core/projects/unix
 make clean
 
+cd $base_dir/mupen64plus-rsp-hle/projects/unix
+make clean
+
 cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
 make clean
 
