@@ -11,7 +11,7 @@ make clean
 cd $base_dir/mupen64plus-input-sdl/projects/unix
 make clean
 
-cd $base_dir/mupen64plus-audio-sdl/projects/unix
+cd $base_dir/mupen64plus-audio-sdl2/projects/unix
 make clean
 
 rm -rf $base_dir/mupen64plus-gui/build

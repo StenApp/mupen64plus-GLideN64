@@ -36,9 +36,9 @@ make -j4 all
 cp $base_dir/mupen64plus-input-sdl/projects/unix/*$suffix $install_dir
 cp $base_dir/mupen64plus-input-sdl/data/* $install_dir
 
-cd $base_dir/mupen64plus-audio-sdl/projects/unix
+cd $base_dir/mupen64plus-audio-sdl2/projects/unix
 make -j4 all
-cp $base_dir/mupen64plus-audio-sdl/projects/unix/*$suffix $install_dir
+cp $base_dir/mupen64plus-audio-sdl2/projects/unix/*$suffix $install_dir
 
 mkdir -p $base_dir/mupen64plus-gui/build
 cd $base_dir/mupen64plus-gui/build
@@ -114,8 +114,6 @@ if [[ $UNAME == *"MINGW"* ]]; then
   cp /$mingw_prefix/bin/libfreetype-6.dll $install_dir
   cp /$mingw_prefix/bin/libbz2-1.dll $install_dir
   cp /$mingw_prefix/bin/libminizip-1.dll $install_dir
-  cp /$mingw_prefix/bin/libsamplerate-0.dll $install_dir
-  cp /$mingw_prefix/bin/libspeexdsp-1.dll $install_dir
   cp /$mingw_prefix/bin/libjasper-4.dll $install_dir
   cp /$mingw_prefix/bin/libjpeg-8.dll $install_dir
   cp $base_dir/7za.exe $install_dir
