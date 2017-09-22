@@ -85,13 +85,13 @@ if [[ $UNAME == *"MINGW"* ]]; then
   else
     MSBuild.exe angrylion-plus.sln //t:plugin-mupen64plus //p:Configuration=Release //p:Platform=x86
   fi
-  cp $base_dir/angrylion-rdp-plus/build/Release/mupen64plus-video-angrylionplus.dll $install_dir
+  cp $base_dir/angrylion-rdp-plus/build/Release/mupen64plus-video-angrylion-plus.dll $install_dir
 else
   mkdir -p $base_dir/angrylion-rdp-plus/build
   cd $base_dir/angrylion-rdp-plus/build
   cmake ../
   make -j4
-  cp mupen64plus-video-angrylionplus$suffix $install_dir
+  cp mupen64plus-video-angrylion-plus$suffix $install_dir
 fi
 
 cd $base_dir
