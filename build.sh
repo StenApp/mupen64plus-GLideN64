@@ -64,9 +64,9 @@ cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
 if [[ $UNAME == *"MINGW"* ]]; then
-  cmake -G "MSYS Makefiles" -DCRC_OPT=On -DMUPENPLUSAPI=On -DCMAKE_AR=/$mingw_prefix/bin/gcc-ar ../../src/
+  cmake -G "MSYS Makefiles" -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On -DCMAKE_AR=/$mingw_prefix/bin/gcc-ar ../../src/
 else
-  cmake -DUSE_SYSTEM_LIBS=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
+  cmake -DUSE_SYSTEM_LIBS=On -DVEC4_OPT=On -DCRC_OPT=On -DMUPENPLUSAPI=On ../../src/
 fi
 make -j4
 
