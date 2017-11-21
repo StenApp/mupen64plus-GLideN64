@@ -22,28 +22,34 @@ install_dir=$PWD/mupen64plus
 mkdir $install_dir
 base_dir=$PWD
 
+echo "==Create mupen64plus-core=="
 cd $base_dir/mupen64plus-core/projects/unix
 make -j4 all
 cp -P $base_dir/mupen64plus-core/projects/unix/*$suffix* $install_dir
 cp $base_dir/mupen64plus-core/data/* $install_dir
 
+echo "==Create mupen64plus-rsp-hle=="
 cd $base_dir/mupen64plus-rsp-hle/projects/unix
 make -j4 all
 cp $base_dir/mupen64plus-rsp-hle/projects/unix/*$suffix $install_dir
 
+echo "==Create mupen64plus-rsp-cxd=="
 cd $base_dir/mupen64plus-rsp-cxd4/projects/unix
 make HLEVIDEO=1 -j4 all
 cp $base_dir/mupen64plus-rsp-cxd4/projects/unix/*$suffix $install_dir
 
+echo "==Create mupen64plus-input-sdl=="
 cd $base_dir/mupen64plus-input-sdl/projects/unix
 make -j4 all
 cp $base_dir/mupen64plus-input-sdl/projects/unix/*$suffix $install_dir
 cp $base_dir/mupen64plus-input-sdl/data/* $install_dir
 
+echo "==Create mupen64plus-audio-sdl2=="
 cd $base_dir/mupen64plus-audio-sdl2/projects/unix
 make -j4 all
 cp $base_dir/mupen64plus-audio-sdl2/projects/unix/*$suffix $install_dir
 
+echo "==Create mupen64plus-gui=="
 mkdir -p $base_dir/mupen64plus-gui/build
 cd $base_dir/mupen64plus-gui/build
 if [[ $UNAME == *"MINGW"* ]]; then
@@ -51,7 +57,7 @@ if [[ $UNAME == *"MINGW"* ]]; then
   make -j4 release
   cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
-  /usr/local/Cellar/qt5/*/bin/qmake ../mupen64plus-gui.pro
+  /usr/local/Cellar/qt/*/bin/qmake ../mupen64plus-gui.pro
   make -j4
   cp -Rp $base_dir/mupen64plus-gui/build/mupen64plus-gui.app $install_dir
 else
@@ -60,6 +66,7 @@ else
   cp $base_dir/mupen64plus-gui/build/mupen64plus-gui $install_dir
 fi
 
+echo "==Create GlideN64=="
 cd $base_dir/GLideN64/src
 ./getRevision.sh
 cd $base_dir/GLideN64/projects/cmake
@@ -70,6 +77,7 @@ else
 fi
 make -j4
 
+echo "==Move ini files=="
 if [[ $UNAME == *"MINGW"* ]]; then
   cp mupen64plus-video-GLideN64$suffix $install_dir
 else
@@ -77,6 +85,7 @@ else
 fi
 cp $base_dir/GLideN64/ini/GLideN64.custom.ini $install_dir
 
+echo "==Create angrylion-rdp-plus=="
 if [[ $UNAME == *"MINGW"* ]]; then
   cd $base_dir/angrylion-rdp-plus
   sed -i 's/python /python3 /g' core/core.vcxproj
@@ -94,6 +103,7 @@ else
   cp mupen64plus-video-angrylion-plus$suffix $install_dir
 fi
 
+echo "==Bundle the files=="
 cd $base_dir
 
 if [[ $UNAME == *"MINGW"* ]]; then
@@ -125,11 +135,17 @@ if [[ $UNAME == *"MINGW"* ]]; then
 elif [[ $UNAME == "Darwin" ]]; then
   my_os=macos
 
-  find mupen64plus -type f -depth 1 \
-    -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/MacOS/ \;
+  mkdir -p mupen64plus/mupen64plus-gui.app/Contents/Frameworks
+  find . -name "mupen64plus*.dylib" -depth 1 \
+ -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/Frameworks/ \;
+
+  mkdir -p mupen64plus/mupen64plus-gui.app/Contents/Resources
+  find . -type f -depth 1 \
+ -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/Resources/ \;
+
 
   cd $install_dir
-  /usr/local/Cellar/qt5/*/bin/macdeployqt mupen64plus-gui.app
+  /usr/local/Cellar/qt/*/bin/macdeployqt mupen64plus-gui.app
 
   for P in $(find mupen64plus-gui.app -type f -name 'Qt*'; find mupen64plus-gui.app -type f -name '*.dylib'); do
     for P1 in $(otool -L $P | awk '/\/usr\/local\/Cellar/ {print $1}'); do
