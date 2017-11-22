@@ -51,7 +51,7 @@ if [[ $UNAME == *"MINGW"* ]]; then
   make -j4 release
   cp $base_dir/mupen64plus-gui/build/release/mupen64plus-gui.exe $install_dir
 elif [[ $UNAME == "Darwin" ]]; then
-  /usr/local/Cellar/qt5/*/bin/qmake ../mupen64plus-gui.pro
+  /usr/local/Cellar/qt/*/bin/qmake ../mupen64plus-gui.pro
   make -j4
   cp -Rp $base_dir/mupen64plus-gui/build/mupen64plus-gui.app $install_dir
 else
@@ -125,11 +125,16 @@ if [[ $UNAME == *"MINGW"* ]]; then
 elif [[ $UNAME == "Darwin" ]]; then
   my_os=macos
 
-  find mupen64plus -type f -depth 1 \
-    -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/MacOS/ \;
+  mkdir -p mupen64plus/mupen64plus-gui.app/Contents/Frameworks
+  find ./mupen64plus -name "*mupen64plus*.dylib" -depth 1 \
+ -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/Frameworks/ \;
+
+  mkdir -p mupen64plus/mupen64plus-gui.app/Contents/Resources
+  find ./mupen64plus -type f -depth 1 \
+ -exec mv {} mupen64plus/mupen64plus-gui.app/Contents/Resources/ \;
 
   cd $install_dir
-  /usr/local/Cellar/qt5/*/bin/macdeployqt mupen64plus-gui.app
+  /usr/local/Cellar/qt/*/bin/macdeployqt mupen64plus-gui.app
 
   for P in $(find mupen64plus-gui.app -type f -name 'Qt*'; find mupen64plus-gui.app -type f -name '*.dylib'); do
     for P1 in $(otool -L $P | awk '/\/usr\/local\/Cellar/ {print $1}'); do
